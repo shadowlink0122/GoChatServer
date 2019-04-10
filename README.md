@@ -5,10 +5,15 @@ ChatServer by Golang
 
 # 起動方法
 Server側
+
   vagrant ssh
+
   cd /vagrant/go_app/tcp
+
   go run server.go
 
 Client側
+
   cd go_app/tcp
+  
   go run client.go
