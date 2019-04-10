@@ -65,7 +65,7 @@ func chatting(conn net.Conn){
 }
 
 func main() {
-  conn, _ := net.Dial("tcp", "192.168.33.10:8000")
+  conn, _ := net.Dial("tcp", "IPAdress:Port")
   conn = SetMyName(conn)
   chatting(conn)
 }
