@@ -88,7 +88,7 @@ func chatting(userData *User, allUsersData *[]User){
   		userData.conn = SendMessage(userData.conn, "Disconnection", userData.seed)
   		fmt.Printf("Exit: %s\n", userData.conn.RemoteAddr())
   		SendForAll(userData, quitMessage, allUsersData)
-  		
+
   		*allUsersData = DeleteUser(userData, allUsersData)
   		break
   	}else{
@@ -107,18 +107,20 @@ func main(){
 
 	for{
 		conn,_ := listen.Accept()
-		userSeed := genSeed(conn)
-		IPAddr := conn.RemoteAddr().String()
-		Name := GetMessage(&User{"NULL", "NULL", conn, userSeed})
 
-		fmt.Printf("New Client: %s\n", IPAddr)
-		fmt.Printf("Client Name: %s\n", Name)
-		newUser := User{IPAddr, Name, conn, userSeed}
-		UserData = append(UserData, newUser)
-		// conn = SendMessage(conn, "<Enter The Room>")
-
-		SendForAll(&newUser, " enters this room.", &UserData)
 		go func(){
+			userSeed := genSeed(conn)
+			IPAddr := conn.RemoteAddr().String()
+			Name := GetMessage(&User{"NULL", "NULL", conn, userSeed})
+
+			fmt.Printf("New Client: %s\n", IPAddr)
+			fmt.Printf("Client Name: %s\n", Name)
+			newUser := User{IPAddr, Name, conn, userSeed}
+			UserData = append(UserData, newUser)
+			// conn = SendMessage(conn, "<Enter The Room>")
+
+			SendForAll(&newUser, " enters this room.", &UserData)
+
 			chatting(&newUser, &UserData)
 
 			conn.Close()
