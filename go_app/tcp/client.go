@@ -5,9 +5,17 @@ import(
 	"fmt"
 	"net"
 	"os"
+	"strconv"
 )
 
-func Input()string{
+const(
+	DISCONNECT = iota
+	SEED
+
+	ELSE
+)
+
+func Input(seed *int)string{
 	var text = bufio.NewScanner(os.Stdin)
 	for{
 		text.Scan()
@@ -15,11 +23,18 @@ func Input()string{
 			break
 		}
 	}
-	return text.Text()
+
+	enc_text := enc(text.Text(), *seed)
+	return enc_text
 }
 
-func SendMessage(conn net.Conn)(net.Conn){
-	text := Input()
+func getSeed(conn net.Conn)(int){
+	seed, _ := strconv.Atoi(GetMessage(conn))
+	return seed
+}
+
+func SendMessage(conn net.Conn, seed *int)(net.Conn){
+	text := Input(seed)
 	conn.Write([]byte(text))
 	return conn
 }
@@ -41,24 +56,39 @@ func PrintMessage(conn net.Conn)(string){
   return message
 }
 
-func SetMyName(conn net.Conn)(net.Conn){
+func SetMyName(conn net.Conn, seed *int){
 	fmt.Printf("YourName: ")
-	SendMessage(conn)
-
-	return conn
+	SendMessage(conn, seed)
 }
 
-func chatting(conn net.Conn){
+func system_message(conn net.Conn, sys_msg string)(int){
+	switch sys_msg{
+	case "Disconnection":
+		return DISCONNECT
+	case "":
+		return DISCONNECT
+
+	default:
+		return ELSE
+	}
+
+	return (ELSE) // Else
+}
+
+func chatting(conn net.Conn, seed *int){
 	for{
 		go func(){
-			conn = SendMessage(conn)
+			SendMessage(conn, seed)
 		}()
 
   	message := GetMessage(conn)
+  	message = dec(message, *seed)
 
-  	if(message == "Disconnection" || message == ""){
-  		break
-  	}else{
+  	switch system_message(conn, message){
+  	case DISCONNECT:
+  		fmt.Println("<Disconnected!>")
+  		return
+  	default:
   		fmt.Println(message)
   	}
 	}
@@ -66,7 +96,8 @@ func chatting(conn net.Conn){
 
 func main() {
   conn, _ := net.Dial("tcp", "192.168.33.10:8000")
-  conn = SetMyName(conn)
-  chatting(conn)
+  msg_seed := getSeed(conn)
+  SetMyName(conn, &msg_seed)
+  chatting(conn, &msg_seed)
 }
 
