@@ -99,9 +99,9 @@ func chatting(userData *User, allUsersData *[]User){
 }
 
 func main(){
-	listen,_ := net.Listen("tcp", "IPAdress:Port")
+	listen,_ := net.Listen("tcp", "192.168.33.10:8000")
 	var UserData []User = make([]User, 0,100)
-	fmt.Println("Running@IPAdress:Port")
+	fmt.Println("Running@192.168.33.10:8000")
 
 	// UserData = append(UserData, User{"192.168.33.10:8000","HostServer"})
 
