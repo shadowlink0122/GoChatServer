@@ -45,20 +45,20 @@ func SendMessage(conn net.Conn, seed *int)(net.Conn){
 //メッセージの受信
 func GetMessage(conn net.Conn)(string){
 	response := make([]byte, 1024)
-  n,_ := conn.Read(response)
-  message := string(response[:n])
+	n,_ := conn.Read(response)
+	message := string(response[:n])
 
-  return message
+	return message
 }
 
 //受信したメッセージを表示する
 func PrintMessage(conn net.Conn)(string){
 	response := make([]byte, 1024)
-  n,_ := conn.Read(response)
-  message := string(response[:n])
+	n,_ := conn.Read(response)
+	message := string(response[:n])
 
-  fmt.Println(message)
-  return message
+	fmt.Println(message)
+	return message
 }
 
 //識別のため、自分の名前を入力する
@@ -91,24 +91,24 @@ func chatting(conn net.Conn, seed *int){
 			}
 		}()
 
-  	message := GetMessage(conn)
-  	message = dec(message, *seed)
+		message := GetMessage(conn)
+		message = dec(message, *seed)
 
-  	switch system_message(conn, message){
-  	case DISCONNECT:
-  		fmt.Println("<Disconnected!>")
-  		return
+		switch system_message(conn, message){
+		case DISCONNECT:
+			fmt.Println("<Disconnected!>")
+			return
 
-  	default:
-  		fmt.Println(message)
-  	}
+		default:
+			fmt.Println(message)
+		}
 	}
 }
 
 func main() {
-  conn, _ := net.Dial("tcp", "192.168.33.10:8000")
-  msg_seed := getSeed(conn)
-  SetMyName(conn, &msg_seed)
-  chatting(conn, &msg_seed)
+	conn, _ := net.Dial("tcp", "192.168.33.10:8000")
+	msg_seed := getSeed(conn)
+	SetMyName(conn, &msg_seed)
+	chatting(conn, &msg_seed)
 }
 

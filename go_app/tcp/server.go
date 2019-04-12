@@ -5,6 +5,7 @@ import(
 	"net"
 	"math/rand"
 	"time"
+	// "database/sql"
 )
 
 type User struct{
@@ -31,17 +32,17 @@ func SendMessage(conn net.Conn, msg string, seed int)(net.Conn){
 
 func GetMessage(userData *User)(string){
 	response := make([]byte, 1024)
-  n,_ := userData.conn.Read(response)
-  message := string(response[:n])
-  message = dec(message, userData.seed)
+	n,_ := userData.conn.Read(response)
+	message := string(response[:n])
+	message = dec(message, userData.seed)
 
-  return message
+	return message
 }
 
 func PrintMessage(userData *User){
-  message := GetMessage(userData)
+	message := GetMessage(userData)
 
-  fmt.Println(message)
+	fmt.Println(message)
 }
 
 func GetPrintMessage(userData *User)(string){
@@ -57,12 +58,19 @@ func PrintUsersData(pUserData *[]User){
 	}
 }
 
-func SendForAll(userData *User, msg string, allUsersData *[]User){
+func SendOtherAll(userData *User, msg string, allUsersData *[]User){
 	msg = fmt.Sprintf("[%s]:%s", userData.UserName, msg)
 	for _, UserData := range *allUsersData{
 		if(UserData != *userData){
 			UserData.conn = SendMessage(UserData.conn, msg, UserData.seed)
 		}
+	}
+}
+
+func SendForAll(userData *User, msg string, allUsersData *[]User){
+	msg = fmt.Sprintf("[%s]:%s", userData.UserName, msg)
+	for _, UserData := range *allUsersData{
+		UserData.conn = SendMessage(UserData.conn, msg, UserData.seed)
 	}
 }
 
@@ -78,28 +86,31 @@ func DeleteUser(userData *User, allUsersData *[]User)([]User){
 
 func chatting(userData *User, allUsersData *[]User){
 	for{
-  	message := GetMessage(userData)
-  	fmt.Printf("[%s]:%s\n\n", userData.UserName, message)
+		message := GetMessage(userData)
+		fmt.Printf("[%s]:%s\n\n", userData.UserName, message)
 
-  	if(message == "UsersData"){
-  		PrintUsersData(allUsersData)
-  	}else if(message == "Exit" || message == ""){
-  		quitMessage := userData.UserName + " exits this Room"
-  		userData.conn = SendMessage(userData.conn, "Disconnection", userData.seed)
-  		fmt.Printf("Exit: %s\n", userData.conn.RemoteAddr())
-  		SendForAll(userData, quitMessage, allUsersData)
+		if(message == "UsersData"){
+			PrintUsersData(allUsersData)
+		}else if(message == "Exit" || message == ""){
+			quitMessage := userData.UserName + " exits this Room"
+			userData.conn = SendMessage(userData.conn, "Disconnection", userData.seed)
+			fmt.Printf("Exit: %s\n", userData.conn.RemoteAddr())
+			SendForAll(userData, quitMessage, allUsersData)
 
-  		*allUsersData = DeleteUser(userData, allUsersData)
-  		break
-  	}else{
-  		SendForAll(userData, message, allUsersData)
-  		// conn = SendMessage(conn, "<GetMessage>")
-  	}
+			*allUsersData = DeleteUser(userData, allUsersData)
+			break
+		}else{
+			SendOtherAll(userData, message, allUsersData)
+			// conn = SendMessage(conn, "<GetMessage>")
+		}
 	}
 }
 
 func main(){
-	listen,_ := net.Listen("tcp", "192.168.33.10:8000")
+	listen,err := net.Listen("tcp", "192.168.33.10:8000")
+	if err != nil{ panic(err.Error()) }
+	defer listen.Close()
+
 	var UserData []User = make([]User, 0,100)
 	fmt.Println("Running@192.168.33.10:8000")
 
