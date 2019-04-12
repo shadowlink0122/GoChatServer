@@ -15,7 +15,7 @@ ChatServer by Golang
 
 	vagrant ssh
 
-	cd /vagrant/webapp_test
+	cd /vagrant/
 
 	make run_s
 
