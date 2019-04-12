@@ -1,7 +1,14 @@
 # GoChatServer
-ChatServer by Golang
+Go言語で書いた、コマンドラインでチャットをするプログラム
 
-プログラム中の "IPAdress:Port" の部分を、あなたの環境にあったものに変更して動作させてください。
+GuestOS側でサーバを起動し、HostOS側でClientを起動して使います。
+
+
+# Vagrantの準備
+
+	brew install Vagrant
+
+	vagrant up
 
 # ビルド方法(Server)
 
