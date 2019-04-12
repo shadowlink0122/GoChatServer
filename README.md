@@ -13,12 +13,12 @@ ChatServer by Golang
 
 # 起動方法(Server)
 
-  vagrant ssh
+	vagrant ssh
 
-  cd /vagrant/webapp_test
+	cd /vagrant/webapp_test
 
-  make run_s
+	make run_s
 
 # 起動方法(Client)
   
-  make run_c
+	make run_c
