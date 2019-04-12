@@ -115,7 +115,7 @@ func main(){
 	// UserData = append(UserData, User{"192.168.33.10:8000","HostServer"})
 
 	for{
-		conn,err := listen.Accept()
+		conn,_ := listen.Accept()
 
 		go func(){
 			userSeed := genSeed(conn)
