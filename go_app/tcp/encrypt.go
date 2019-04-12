@@ -34,6 +34,4 @@ func enc(raw_msg string, seed int)(string){
 	return enc_str
 }
 
-// func main(){
-// 	fmt.Println(enc("test", 10))
-// }
+

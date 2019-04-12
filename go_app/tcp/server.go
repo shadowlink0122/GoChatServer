@@ -107,9 +107,7 @@ func chatting(userData *User, allUsersData *[]User){
 }
 
 func main(){
-	listen,err := net.Listen("tcp", "192.168.33.10:8000")
-	if err != nil{ panic(err.Error()) }
-	defer listen.Close()
+	listen,_ := net.Listen("tcp", "192.168.33.10:8000")
 
 	var UserData []User = make([]User, 0,100)
 	fmt.Println("Running@192.168.33.10:8000")
@@ -117,7 +115,7 @@ func main(){
 	// UserData = append(UserData, User{"192.168.33.10:8000","HostServer"})
 
 	for{
-		conn,_ := listen.Accept()
+		conn,err := listen.Accept()
 
 		go func(){
 			userSeed := genSeed(conn)
@@ -139,3 +137,5 @@ func main(){
 
 	}
 }
+
+
