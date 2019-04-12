@@ -3,16 +3,22 @@ ChatServer by Golang
 
 プログラム中の "IPAdress:Port" の部分を、あなたの環境にあったものに変更して動作させてください。
 
+# ビルド方法(Server)
+
+	make server
+
+# ビルド方法(Client)
+
+	make client
+
 # 起動方法(Server)
 
   vagrant ssh
 
-  cd /vagrant/go_app/tcp
+  cd /vagrant/webapp_test
 
-  go run server.go
+  make run_s
 
 # 起動方法(Client)
-
-  cd go_app/tcp
   
-  go run client.go
+  make run_c
