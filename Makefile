@@ -21,5 +21,6 @@ git:
 	git checkout miyajima
 	git add .
 	git commit -m "Chat Server and Client"
-	git push
+	git push --set-upstream origin miyajima
+
 
