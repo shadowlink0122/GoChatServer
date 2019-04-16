@@ -16,12 +16,17 @@ func enc_lower_anphabet(one_str rune, seed int)(string){
 	return string((int(one_str) - int('a') + seed) % int(int('z') - int('a') + 1) + int('a'))
 }
 
+func encCaesar(one_str rune, seed int)(string){
+	return string(int(one_str) - seed)
+}
+
 func enc(raw_msg string, seed int)(string){
 	var enc_str string
 
 	// fmt.Println(raw_msg, seed)
 
 	for _, c := range raw_msg{
+		// enc_str = encCaesar(c, seed)
 		if('a' <= c && c <= 'z'){
 			enc_str += enc_lower_anphabet(c, seed)
 		}else if('A' <= c && c <= 'Z'){
