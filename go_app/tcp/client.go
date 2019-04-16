@@ -8,13 +8,6 @@ import(
 	"strconv"
 )
 
-const(
-	DISCONNECT = iota
-	SEED
-
-	ELSE
-)
-
 //入力と、その文字列を暗号化して渡す
 func Input(seed *int)string{
 	var text = bufio.NewScanner(os.Stdin)

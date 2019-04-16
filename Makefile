@@ -14,10 +14,11 @@ run_s:
 run_c:
 	./go_app/client
 
-git:
+dist:
 	rm -rf ./go_app/server
 	rm -rf ./go_app/client
 
+git: dist
 	git checkout miyajima
 	git add .
 	git commit -m "Chat Server and Client"
