@@ -17,7 +17,7 @@ run_c:
 dist:
 	rm -rf ./go_app/server
 	rm -rf ./go_app/client
-	zip -r ./ go_app
+	zip -r go_app.zip ./
 
 git: dist
 	git checkout miyajima
