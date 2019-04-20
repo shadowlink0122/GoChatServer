@@ -5,9 +5,13 @@ ChatServer by Golang
 
 # ビルド方法(Server)
 
+ゲストOS側で実行
+
 	make server
 
 # ビルド方法(Client)
+
+ホストOS側で実行
 
 	make client
 
@@ -20,5 +24,7 @@ ChatServer by Golang
 	make run_s
 
 # 起動方法(Client)
+  
+ホストOS側で実行
   
 	make run_c
