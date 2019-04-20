@@ -12,20 +12,32 @@ GuestOS側でサーバを起動し、HostOS側でClientを起動して使いま�
 
 # ビルド方法(Server)
 
+ゲストOS側で実行
+
+	vagrant ssh
+
+	cd /vagrant
+
 	make server
 
 # ビルド方法(Client)
+
+ホストOS側で実行
 
 	make client
 
 # 起動方法(Server)
 
+先にサーバの起動をしてください。
+
 	vagrant ssh
 
-	cd /vagrant/
+	cd /vagrant
 
 	make run_s
 
 # 起動方法(Client)
   
+ホストOS側で実行
+
 	make run_c

@@ -1,4 +1,5 @@
 SRC = ./go_app/tcp
+DIST = ./go_app.zip
 
 server:
 	go build ${SRC}/server.go ${SRC}/encrypt.go ${SRC}/decrypt.go ${SRC}/definition.go
@@ -14,10 +15,19 @@ run_s:
 run_c:
 	./go_app/client
 
-git:
+clean:
 	rm -rf ./go_app/server
 	rm -rf ./go_app/client
+	rm -rf ${DIST}
+
+dist: clean
+	rm -rf ./go_app/server
+	rm -rf ./go_app/client
+	zip -r ${DIST} ./
+
+git: dist
 	git add .
 	git commit -m "Chat Server and Client"
-	git push
+	git push origin master
+
 
