@@ -1,0 +1,29 @@
+create database ChatServer;
+
+use ChatServer;
+
+create table users(
+  user_name varchar(128),
+  password varchar(128),
+  primary key(user_name)
+);
+
+create table token(
+  user_name varchar(128),
+  token_id varchar(128),
+  date date,
+  time time,
+  primary key(user_name)
+);
+
+create table room(
+  room_id varchar(128),
+  user_name varchar(128),
+  message varchar(128),
+  primary key(room_id, user_name)
+);
+
+create table master(
+  room_id varchar(128),
+  user_name varchar(128)
+);
