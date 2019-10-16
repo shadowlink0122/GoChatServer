@@ -12,7 +12,7 @@ func main() {
 	router := gin.Default()
 
 	// top
-	router.POST("/", func(ctx *gin.Context) {
+	router.GET("/", func(ctx *gin.Context) {
 		ctx.String(
 			http.StatusOK,
 			"TopPage",
@@ -21,11 +21,11 @@ func main() {
 
 	// authorication
 	router.POST("/user/create", handler.UserCreate())
-	router.POST("/user/login", handler.AuthLogin())
+	// router.POST("/user/login", handler.AuthLogin())
 
 	// user data
-	router.GET("/user", handler.UserData())
-	router.GET("/user/:user_id", handler.UserData())
+	// router.GET("/user", handler.UserData())
+	// router.GET("/user/:user_id", handler.UserData())
 
 	// run
 	router.Run(":8090")

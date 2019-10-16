@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/shadowlink0122/sakura_test/pkg/di"
+	// "github.com/shadowlink0122/sakura_test/pkg/di"
 )
 
 type UserCreateResponse struct {
@@ -16,29 +16,29 @@ func UserCreate() gin.HandlerFunc {
 		// get form data
 		ctx.Request.ParseForm()
 		username := ctx.Request.Form["id"][0]
-		password := ctx.Request.Form["password"][0]
+		// password := ctx.Request.Form["password"][0]
 
 		// check form-data format
-		if err != nil{
-			ctx.String(
-				http.Status
-			)
-		}
+		// if err != nil {
+		// ctx.String(
+		// 	// http.Status
+		// )
+		// }
 
 		// Create TokenID
-		token, err := di.User.Create(username, password)
-		if err != nil{
-			ctx.String(
-				http.StatusBadRequest,
-				err
-			)
-		}
+		// token, err := di.User.Create(username, password)
+		// if err != nil {
+		// ctx.String(
+		// 	http.StatusBadRequest,
+		// 	err
+		// )
+		// }
 
 		// ok
 		ctx.JSON(
 			http.StatusOK,
-			AuthCreateResponse{
-				Token: token,
+			UserCreateResponse{
+				Token: username,
 			},
 		)
 	}
