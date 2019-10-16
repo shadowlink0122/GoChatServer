@@ -1,0 +1,20 @@
+GOARCH="amd64"
+GOBIN=""
+GOCHAR="6"
+GOEXE=""
+GOHOSTARCH="amd64"
+GOHOSTOS="linux"
+GOOS="linux"
+GOPATH="/usr/bin"
+GORACE=""
+GOROOT="/usr/lib/go"
+GOTOOLDIR="/usr/lib/go/pkg/tool/linux_amd64"
+TERM="dumb"
+CC="gcc"
+GOGCCFLAGS="-g -O2 -fPIC -m64 -pthread"
+CXX="g++"
+CGO_ENABLED="1"
+
+========================================
+export PATH=$PATH:$GOROOT
+
